@@ -1,6 +1,6 @@
 class Auth {
   constructor() {
-    this._url = 'http://api.mesto.andreysapo.nomoredomains.work';
+    this._url = 'https://api.mesto.andreysapo.nomoredomains.work';
     this._singUpEndPoint = '/signup';
     this._singInEndPoint = '/signin';
     this._validationEndPoint = '/users/me';
@@ -65,4 +65,4 @@ class Auth {
   }
 }
 
-export const exampleAuth = new Auth;
+export const exampleAuth = new Auth();
