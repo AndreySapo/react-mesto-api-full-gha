@@ -53,7 +53,6 @@ function Main({
         <ul className="elements__grid">
           {
             cards.map((card) => {
-              console.log(card)
               return (
                 <Card
                   cardInfo={card}
