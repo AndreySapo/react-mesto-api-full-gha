@@ -1,0 +1,11 @@
+.element__button-zoom {
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 100%;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.element__button-zoom:hover {
+  cursor: pointer;
+}

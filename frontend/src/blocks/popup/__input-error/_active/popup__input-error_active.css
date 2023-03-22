@@ -1,0 +1,25 @@
+.popup__input-error_active {
+  margin: 0 36px;
+  position: absolute;
+  top: 140px;
+  opacity: 1;
+}
+
+@media screen and (max-width: 767px) {
+  .popup__input-error_active{
+    margin: 0 22px;
+    top: 154px;
+  }
+}
+
+.popup__input-error_active:last-of-type {
+  top: 0;
+  position: relative;
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .popup__input-error_active:last-of-type{
+    top: 211px;
+  }
+}

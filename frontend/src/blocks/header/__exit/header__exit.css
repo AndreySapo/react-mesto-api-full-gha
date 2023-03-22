@@ -1,0 +1,7 @@
+.header__exit {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: calc((22/18)*100%);
+  text-decoration: none;
+  color: #A9A9A9;
+}

@@ -143,7 +143,7 @@ module.exports.login = (req, res, next) => {
         httpOnly: true,
       });
 
-      res.send({ _id: user._id });
+      res.send({ token: `${token}` });
     })
     .catch(next);
 };

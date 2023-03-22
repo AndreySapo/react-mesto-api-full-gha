@@ -1,0 +1,11 @@
+.img-zoom__container {
+  position: relative;
+  margin-top: 20px;
+}
+
+
+@media screen and (max-width: 767px) {
+  .img-zoom__container {
+    margin-top: 44px;
+  }
+}

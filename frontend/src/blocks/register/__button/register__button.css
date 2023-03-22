@@ -1,0 +1,22 @@
+.register__button {
+  max-width: 358px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 216px auto 15px auto;
+  padding: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: calc((22/18)*100%);
+  text-align: center;
+  border-radius: 2px;
+  border: none;
+  transition: all .25s;
+}
+
+.register__button:hover {
+  cursor: pointer;
+  opacity: 0.85;
+}
