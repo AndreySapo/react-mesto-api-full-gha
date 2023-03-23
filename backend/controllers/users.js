@@ -27,7 +27,7 @@ module.exports.getUserByID = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new ErrorNotFound('Пользователь по указанному _id не найден.');
+        next(new ErrorNotFound('Пользователь по указанному _id не найден.'));
       } else {
         next(err);
       }
@@ -93,7 +93,7 @@ module.exports.updateUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new ErrorBadRequest('Некорректные данные при создании карточки');
+        next(new ErrorBadRequest('Некорректные данные при создании карточки'));
       } else {
         next(err);
       }
@@ -117,7 +117,7 @@ module.exports.updateAvatar = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new ErrorBadRequest('Некорректные данные при создании карточки');
+        next(new ErrorBadRequest('Некорректные данные при создании карточки'));
       } else {
         next(err);
       }
