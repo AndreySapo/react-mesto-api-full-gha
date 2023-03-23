@@ -32,8 +32,6 @@ module.exports = (req, res, next) => {
     } else {
       return handleAuthError();
     }
-  } else if (req.cookies.jwt) {
-    req.user = generatePayload(req.cookies.jwt);
   } else {
     return handleAuthError();
   }

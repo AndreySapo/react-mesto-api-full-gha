@@ -2,10 +2,10 @@ const bcrypt = require('bcrypt');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const ErrorInternalServer = require('../errors/ErrorInternalServer');
 const ErrorNotFound = require('../errors/ErrorNotFound');
 const ErrorUnauthorized = require('../errors/ErrorUnauthorized');
 const ErrorConflict = require('../errors/ErrorConflict');
+const ErrorBadRequest = require('../errors/ErrorBadRequest');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -21,16 +21,13 @@ module.exports.getUserByID = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        throw new ErrorNotFound('Получение пользователя с несуществующим в БД id');
+        next(new ErrorNotFound('Получение пользователя с несуществующим в БД id'));
       }
       res.send({ user });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
         throw new ErrorNotFound('Пользователь по указанному _id не найден.');
-      }
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
       } else {
         next(err);
       }
@@ -67,6 +64,10 @@ module.exports.createUser = (req, res, next) => {
       });
     })
     .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new ErrorBadRequest('Некорректные данные при создании карточки'));
+        return;
+      }
       if (err.code === 11000) {
         next(new ErrorConflict('Пользователь с таким электронным адресом уже зарегистрирован'));
         return;
@@ -77,11 +78,11 @@ module.exports.createUser = (req, res, next) => {
 
 // обновить информацию по юзеру
 module.exports.updateUser = (req, res, next) => {
-  const { name, about, avatar } = req.body;
+  const { name, about } = req.body;
 
   User.findByIdAndUpdate(
     req.user,
-    { name, about, avatar },
+    { name, about },
     { new: true, runValidators: true },
   )
     .then((user) => {
@@ -91,8 +92,8 @@ module.exports.updateUser = (req, res, next) => {
       res.send({ user });
     })
     .catch((err) => {
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
+      if (err.name === 'ValidationError') {
+        throw new ErrorBadRequest('Некорректные данные при создании карточки');
       } else {
         next(err);
       }
@@ -115,8 +116,8 @@ module.exports.updateAvatar = (req, res, next) => {
       res.send({ user });
     })
     .catch((err) => {
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
+      if (err.name === 'ValidationError') {
+        throw new ErrorBadRequest('Некорректные данные при создании карточки');
       } else {
         next(err);
       }
@@ -161,12 +162,5 @@ module.exports.userInfo = (req, res, next) => {
         data: user,
       });
     })
-    .catch((err) => {
-      // ? может ещё какая-то ошибка должна быть?
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
-      } else {
-        next(err);
-      }
-    });
+    .catch((err) => next(err));
 };

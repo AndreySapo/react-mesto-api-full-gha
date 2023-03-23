@@ -169,8 +169,9 @@ class Api {
 }
 
 export const exampleAPI = new Api({
+  // TODO перед деплоем заменить
   link: 'https://api.mesto.andreysapo.nomoredomains.work',
-  // link: 'https://mesto.nomoreparties.co/v1/',
+  // link: 'http://localhost:3000',
   // cohort: 'cohort-54',
   // token: '05145e33-315e-4591-bbb6-f1880e215d8f'
 })

@@ -1,5 +1,4 @@
 const Card = require('../models/card');
-const ErrorInternalServer = require('../errors/ErrorInternalServer');
 const ErrorNotFound = require('../errors/ErrorNotFound');
 const ErrorForbidden = require('../errors/ErrorForbidden');
 const ErrorBadRequest = require('../errors/ErrorBadRequest');
@@ -7,13 +6,7 @@ const ErrorBadRequest = require('../errors/ErrorBadRequest');
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
-    .catch((err) => {
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
-      } else {
-        next(err);
-      }
-    });
+    .catch((err) => next(err));
 };
 
 module.exports.createCard = (req, res, next) => {
@@ -25,8 +18,8 @@ module.exports.createCard = (req, res, next) => {
       res.send({ data: card });
     })
     .catch((err) => {
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
+      if (err.name === 'ValidationError') {
+        throw new ErrorBadRequest('Некорректные данные при создании карточки');
       } else {
         next(err);
       }
@@ -53,10 +46,7 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new ErrorBadRequest('Удаление карточки с несуществующим в БД id');
-      }
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
+        next(new ErrorBadRequest('Удаление карточки с несуществующим в БД id'));
       } else {
         next(err);
       }
@@ -77,10 +67,7 @@ module.exports.likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new ErrorBadRequest('Передан несуществующий _id карточки');
-      }
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
+        next(new ErrorBadRequest('Передан несуществующий _id карточки'));
       } else {
         next(err);
       }
@@ -101,10 +88,7 @@ module.exports.dislikeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new ErrorBadRequest('Передан несуществующий _id карточки');
-      }
-      if (err.name === 'InternalServerError') {
-        throw new ErrorInternalServer('На сервере произошла ошибка');
+        next(new ErrorBadRequest('Передан несуществующий _id карточки'));
       } else {
         next(err);
       }

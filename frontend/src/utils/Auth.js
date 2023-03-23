@@ -1,5 +1,7 @@
 class Auth {
   constructor() {
+    // TODO Перед деплоем заменить
+    // this._url = 'http://localhost:3000';
     this._url = 'https://api.mesto.andreysapo.nomoredomains.work';
     this._singUpEndPoint = '/signup';
     this._singInEndPoint = '/signin';

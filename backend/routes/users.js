@@ -7,6 +7,7 @@ const {
   updateAvatar,
   userInfo,
 } = require('../controllers/users');
+const regexLink = require('../utils/regexLink');
 
 usersRouter.get('/', getUsers);
 
@@ -37,7 +38,7 @@ usersRouter.patch(
   '/me/avatar',
   celebrate({
     body: Joi.object().keys({
-      avatar: Joi.string().required().regex(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/),
+      avatar: Joi.string().required().regex(regexLink),
     }),
   }),
   updateAvatar,
