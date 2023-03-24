@@ -3,9 +3,7 @@ class Api {
     // this._url = link + cohort;
     this._url = link;
     this._headers = {
-      headers: {
-        // authorization: token
-      }
+      headers: {}
     }
   }
 
